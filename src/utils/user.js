@@ -4,6 +4,7 @@ import {
 	Timestamp,
 	updateDoc,
 	onSnapshot,
+	serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
@@ -34,11 +35,11 @@ export async function setUser(userId, currentUserEmail) {
 	await setDoc(docReference, docData);
 }
 
-export async function onboardUser(userId, currentUserEmail, formValues) {
+export function onboardUser(userId, formValues) {
 	const docData = {
-		userId: userId,
+		// userId: userId,
 		fullname: formValues.fullname,
-		email: currentUserEmail,
+		// email: currentUserEmail,
 		whatsapp_no: formValues.whatsapp_no,
 		dob: { day: formValues.dob.day, month: formValues.dob.day },
 		age: formValues.age,
@@ -51,18 +52,27 @@ export async function onboardUser(userId, currentUserEmail, formValues) {
 		purpose: formValues.purpose,
 		currentProfession: formValues.currentProfession,
 		applicationReason: formValues.applicationReason,
-		isSuspended: 'false',
-		isCertIssued: 'false',
-		hasCompletedOnboarding: 'false',
-		role: 'user',
-		registeredDate: Timestamp,
+		isSuspended: false,
+		isCertIssued: false,
+		hasCompletedOnboarding: false,
+
+		timestamp: serverTimestamp(),
 	};
+
 	const docReference = doc(db, 'users', userId);
-	const updatedData = await updateDoc(docReference, docData);
+	const updatedData = updateDoc(docReference, docData);
 
 	return updatedData;
 }
 
+export function hasCompletedOnboarding(userId, setComplete) {
+	const docData = {
+		hasCompletedOnboarding: setComplete,
+	};
+
+	const docReference = doc(db, 'users', userId);
+	updateDoc(docReference, docData);
+}
 export async function fetchUserRole(userId) {
 	console.log('0o0o0ikkj');
 }

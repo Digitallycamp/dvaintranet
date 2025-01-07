@@ -205,6 +205,7 @@ function DashboardLayout() {
 	const adminLinks = [
 		{ to: '/me/app-settings', icon: <Settings />, label: 'App Settings' },
 		{ to: '/me/create-course', icon: <BookPlus />, label: 'Create Courses' },
+		{ to: '/me/students', icon: <BookPlus />, label: 'Students' },
 	];
 
 	return (

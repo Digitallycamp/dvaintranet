@@ -5,6 +5,10 @@ import RouteLoader from '../components/shared/RouteLoader';
 import { days, months } from '../utils/date';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { hasCompletedOnboarding, onboardUser } from '../utils/user';
+
+import { TailSpin } from 'react-loader-spinner';
+import toast from 'react-hot-toast';
 
 const intialValues = {
 	fullname: '',
@@ -22,11 +26,13 @@ const intialValues = {
 	currentProfession: '',
 	applicationReason: '',
 };
+
 function OnboardingScreen() {
 	const [loadingScreen, setIsLoadingScreen] = useState(true);
 	const [formValues, setFormValues] = useState(intialValues);
 	const [step, setStep] = useState(1);
 	const [formError, setFormError] = useState({});
+	const [isSubmitting, setIsSubmiting] = useState(false);
 
 	const navigate = useNavigate();
 	const { user } = useAuth();
@@ -114,10 +120,22 @@ function OnboardingScreen() {
 		}
 	};
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
+		setIsSubmiting(true);
+		await new Promise((resolve) => setTimeout(() => resolve(), 1500));
 		if (validateForm()) {
-			console.log(formValues);
+			onboardUser(user.userId, formValues)
+				.then(() => {
+					hasCompletedOnboarding(user.userId, true);
+					toast.success('Onboarding completed !.');
+				})
+				.catch((error) => {
+					console.log('User onboarding failed:', error.message);
+				})
+				.finally(() => {
+					setIsSubmiting(false);
+				});
 		}
 	}
 
@@ -210,8 +228,8 @@ function OnboardingScreen() {
 										name='email'
 										type='text'
 										className='w-full h-10 px-3 rounded-md border border-[#CACFD6]'
-										value={formValues.email || 'text@gmail.com'}
-										onChange={handleChange}
+										value={user.email}
+										// onChange={handleChange}
 										readOnly
 									/>
 									{/* {formError.email && (
@@ -545,7 +563,20 @@ function OnboardingScreen() {
 								transition={{ duration: 0.3 }}
 								className='border border-[#CACFD6] py-2 rounded-lg flex justify-center items-center gap-2 bg-[#F4F4F6]'
 							>
-								<span className='text-[#fff] font-bold'>Get Started</span>
+								{isSubmitting ? (
+									<TailSpin
+										visible={true}
+										height='40'
+										width='40'
+										color='#4fa94d'
+										ariaLabel='tail-spin-loading'
+										radius='1'
+										wrapperStyle={{}}
+										wrapperClass=''
+									/>
+								) : (
+									<span className='text-[#fff] font-bold'>Get Started</span>
+								)}
 							</motion.button>
 						)}
 					</form>

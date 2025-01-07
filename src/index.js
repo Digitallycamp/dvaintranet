@@ -7,6 +7,8 @@ import Settings from './routes/admin/Settings/Settings';
 import OnboardingScreen from './routes/OnboardingScreen';
 import { AuthProvider } from './context/AuthContext';
 import StudentsList from './routes/admin/StudentsList/StudentsList';
+import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 const Login = lazy(() => import('./routes/Login'));
 const SignUp = lazy(() => import('./routes/SignUp'));
 const UserDashboardLayout = lazy(() =>
@@ -77,6 +79,8 @@ root.render(
 					</Routes>
 				</Suspense>
 			</AuthProvider>
+
+			<Toaster position='top-center' />
 		</BrowserRouter>
 	</React.StrictMode>
 );
