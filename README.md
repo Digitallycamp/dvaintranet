@@ -58,3 +58,10 @@ when user login without signup, update their `user collection` with just the `em
 Redirect the user to onboarding
 
 When user authenticate fro signup, redirect them to onboarding screen to complete the onboarding and set the `isOnboardingComplete` property `to true`
+
+## Add course to user
+
+- When user click on i have made payment for the first time, add the course to user.
+- Admin approves user by update the `approved` field in the added course.
+- Show only user approved course in dashboard.
+- Show only user approved course lessons in lessons page.
