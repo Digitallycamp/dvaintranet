@@ -6,17 +6,20 @@ function PaymentInfoCard({
 	handleClick,
 	handleCourseRegistration,
 	isSubmitting,
+	courseTitle,
+	careerPath,
 }) {
 	return (
-		<div className='bg-white p-6 rounded-lg max-w-[512px] h-fit shadow-lg space-y-3 '>
-			<div className='flex justify-end'>
+		<div className=' rounded-lg max-w-[512px] h-fit space-y-3 '>
+			{/* <div className='flex justify-end'>
 				<button onClick={handleClick}>
 					<X />
 				</button>
+			</div> */}
+			<div>
+				<h1 className='text-zinc-800 text-2xl font-semibold'>{courseTitle}</h1>
+				<p className='text-zinc-700'>({careerPath})</p>
 			</div>
-			<h1 className='text-zinc-800 text-2xl font-semibold'>
-				Full-Stack Engineer
-			</h1>
 			<div>
 				<h3>Pay to:</h3>
 

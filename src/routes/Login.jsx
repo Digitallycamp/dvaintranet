@@ -17,24 +17,31 @@ function Login() {
 		navigate('/me');
 	};
 	return (
-		<main className=' w-screen h-screen overflow-hidden  bg-[#EEE6E3] '>
+		<main className=' w-screen h-screen overflow-hidden  bg-white '>
 			<div className=' w-full md:flex'>
-				<div className=' h-[40vh] md:h-screen md:w-[60%]'>
-					<img src={illust} alt='Illustration' className='h-full' />
+				<div className=' h-[40vh] md:h-screen md:w-[45.3%] p-4 md:p-6  rounded-2xl'>
+					<img
+						src={illust}
+						alt='Illustration'
+						className='h-full w-full rounded-2xl'
+					/>
 				</div>
-				<div className='px-4 md:flex-1 md:flex md:flex-col md:justify-center'>
-					<div className='flex justify-center mb-4 mt-6'>
+				<div className='md:px-4 mt-6 md:flex-1 md:flex md:flex-col md:justify-center'>
+					{/* <div className='flex justify-center mt-6 mb-6'>
 						<img src={brandLogo} alt='Digitally Virtual Academy' />
-					</div>
-					<div className='w-full max-w-[512px] mx-auto  rounded-lg p-8'>
-						<h1 className=' text-center font-bold text-2xl text-[#1c1d1d]'>
+					</div> */}
+					<div className='w-full max-w-[512px] mx-auto  rounded-lg md:p-8'>
+						<h1 className=' text-center font-bold text-4xl text-[#1c1d1d]'>
 							Welcome Back
 						</h1>
-						<div className='flex flex-col space-y-6 mt-9'>
+						<p className='text-center mt-6'>
+							Login into your account using your email
+						</p>
+						<div className='flex flex-col space-y-6 mt-12'>
 							<motion.button
 								initial={{ scale: 0.9 }}
 								whileHover={{ scale: 1 }}
-								className='border border-[#CACFD6] py-2 rounded-lg flex justify-center items-center gap-2 bg-[#F4F4F6]'
+								className='border border-[#CACFD6] py-2 rounded-lg flex justify-center items-center gap-2 bg-white'
 								onClick={handleSubmitWithGoogle}
 							>
 								<img src={google} alt='google logo' width={32} height={32} />{' '}
@@ -45,7 +52,7 @@ function Login() {
 							<motion.button
 								initial={{ scale: 0.9 }}
 								whileHover={{ scale: 1 }}
-								className='border border-[#CACFD6] py-2 rounded-lg flex justify-center items-center gap-2 bg-[#F4F4F6]'
+								className='border border-[#CACFD6] py-2 rounded-lg flex justify-center items-center gap-2 bg-white'
 							>
 								<img src={github} alt='github logo' width={32} height={32} />{' '}
 								<span className=' text-[#1c1d1d] font-bold '>
@@ -53,12 +60,12 @@ function Login() {
 								</span>
 							</motion.button>
 						</div>
-						<hr />
+
 						<p className='text-center mt-8 font-bold space-x-2'>
 							<span>Dont you have an account?</span>
-							<a href='/signup' className='text-blue-900'>
+							<Link to='/signup' className='text-blue-900'>
 								Sign up
-							</a>
+							</Link>
 						</p>
 					</div>
 				</div>

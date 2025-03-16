@@ -43,4 +43,31 @@ body {
 	}
 }
 
+.modal-content {
+	overflow: auto; /* Allows scrolling */
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.modal-content::-webkit-scrollbar {
+	display: none;
+}
+
 /* Add this to your global CSS file or a specific CSS module */
+
+main {
+	background-image: url('./assets/Cert-background.png');
+	width: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	/* width: 29.7cm;
+	height: 21cm; */
+	/* aspect-ratio: 1.1.41; */
+}
+
+.images {
+	background-image: url('./assets/frame.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	color: #f9f9f9d8;
+}

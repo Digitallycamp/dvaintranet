@@ -42,9 +42,9 @@ function CourseDetails() {
 	const location = useLocation();
 	const course = location.state;
 	console.log(course);
-	const openMakePayment = () => {
-		setIsShowModal(!isShowModal);
-	};
+	// const openMakePayment = () => {
+	// 	setIsShowModal(!isShowModal);
+	// };
 
 	const handleCompleteRCourseRegistration = async (cid) => {
 		// Check if user already added thatg course
@@ -92,7 +92,7 @@ function CourseDetails() {
 					<div className=' flex flex-col gap-3 sm:flex sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-6'>
 						<button
 							className='order-2 sm:order-none bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto'
-							onClick={openMakePayment}
+							onClick={() => setIsShowModal(!isShowModal)}
 						>
 							Make Payment To Register
 						</button>
@@ -200,16 +200,20 @@ function CourseDetails() {
 				})}
 			</div>
 			<div className='mt-8 flex justify-center'>
-				<button className='order-2 sm:order-none bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto'>
+				<button
+					onClick={() => setIsShowModal(!isShowModal)}
+					className='order-2 sm:order-none bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto'
+				>
 					Get started
 				</button>
 			</div>
 
 			{isShowModal && (
-				<Modal>
+				<Modal handleModalClick={() => setIsShowModal(!isShowModal)}>
 					<PaymentInfoCard
 						isSubmitting={isSubmitting}
-						handleClick={openMakePayment}
+						courseTitle={course.title}
+						careerPath={course['career path']}
 						handleCourseRegistration={() =>
 							handleCompleteRCourseRegistration(course.id)
 						}

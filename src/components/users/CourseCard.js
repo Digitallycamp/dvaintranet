@@ -1,9 +1,11 @@
-import { Clock } from 'lucide-react';
+import { Clock, User } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createSlug } from '../../utils/createSlug';
+import { useAuth } from '../../context/AuthContext';
 
 function CourseCard(props) {
+	const { user } = useAuth();
 	const {
 		id,
 		title,
@@ -28,14 +30,34 @@ function CourseCard(props) {
 				</div>
 				<span>{skillLevel}</span>
 			</div>
-			<div>
-				<Link
-					to={`/me/courses/${slug}?msockid=${id}`}
-					className='bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer'
-					state={props}
-				>
-					Register
-				</Link>
+			<div className=' flex justify-between'>
+				{user.role === 'user' && (
+					<Link
+						to={`/me/courses/${slug}?msockid=${id}`}
+						className='bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer'
+						state={props}
+					>
+						Register
+					</Link>
+				)}
+
+				{user.role === 'admin' && (
+					<div className=' flex justify-between w-full'>
+						<Link
+							to={`/me/courses/edit/${slug}?msockid=${id}`}
+							className='bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer'
+							state={props}
+						>
+							Edit
+						</Link>
+						<button
+							onClick={props.handleClick}
+							className='bg-zinc-900 text-zinc-300 font-semibold px-6 py-2 rounded-md mt-auto cursor-pointer'
+						>
+							Add Lesson
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

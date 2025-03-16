@@ -6,11 +6,20 @@ import {
 	onSnapshot,
 	serverTimestamp,
 	arrayUnion,
+	collection,
+	getDocs,
+	getDoc,
 } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
+import { useAuth } from '../context/AuthContext';
+import toast, { Toaster } from 'react-hot-toast';
+import { getCoursesByIds, getLessonsByCourseAndBatchIds } from './course';
 
 // const currentBatch = 'batchA2025';
 export async function setUser(userId, currentUserEmail) {
+	// generate random number for student ID 8 digits
+	const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+
 	const docData = {
 		userId: userId,
 		email: currentUserEmail,
@@ -33,6 +42,7 @@ export async function setUser(userId, currentUserEmail) {
 		currentProfession: '',
 		applicationReason: '',
 		batches: {},
+		studentID: `DVA-IT-${randomNumber}`,
 	};
 	const docReference = doc(db, 'users', userId);
 
@@ -134,6 +144,235 @@ export async function addCourseToBatch(userId, batchName, courseId) {
 
 	console.log(`Course ${courseId} added to batch ${batchName} with status `);
 }
+/*****APPROVE USER COURSE: UPDATE USER COURSE BY ATTEND */
+// export async function approveStudentCourse(userId, batchName, courseId) {
+// 	try {
+// 		// Reference the user document
+// 		const userRef = doc(db, 'users', userId);
+// 		// Fetch the user's data
+// 		const userDoc = await getDoc(userRef);
+// 		if (!userDoc.exists()) {
+// 			throw new Error('User not found.');
+// 		}
+// 		if (userDoc.data().role !== 'admin') {
+// 			return toast.error('UnAuthorized!');
+// 		}
+// 		// Find the course in the specified batch
+// 		const batch = userDoc.data().batches[batchName];
+// 		if (!batch) {
+// 			throw new Error('Batch not found.');
+// 		}
+// 		const courseIndex = batch.findIndex(
+// 			(course) => course.courseID === courseId
+// 		);
+// 		if (courseIndex === -1) {
+// 			throw new Error('Course not found.');
+// 		}
+
+// 		// Update the course's approved status
+// 		const updatedBatch = batch.map((course, index) =>
+// 			index === courseIndex ? { ...course, approved: true } : course
+// 		);
+
+// 		// Update the Firestore document
+// 		await updateDoc(userRef, {
+// 			[`batches.${batchName}`]: updatedBatch,
+// 		});
+
+// 		console.log(`Course ${courseId} approved for user ${userId}`);
+// 		toast.success('Course approved successfully!');
+// 	} catch (error) {
+// 		console.error('Error approving course:', error);
+// 		toast.error(error.message || 'Failed to approve course.');
+// 	}
+// }
+
+export async function approveStudentCourse(userId, batchName, courseId) {
+	const userRef = doc(db, 'users', userId);
+
+	// Fetch the user's data
+	const userDoc = await getDoc(userRef);
+	if (!userDoc.exists()) {
+		throw new Error('User not found.');
+	}
+
+	// Find the course in the specified batch
+	const batch = userDoc.data().batches[batchName];
+	if (!batch) {
+		throw new Error('Batch not found.');
+	}
+
+	const updatedBatch = batch.map((course) =>
+		course.courseID === courseId ? { ...course, approved: true } : course
+	);
+
+	// Update the Firestore document
+	await updateDoc(userRef, {
+		[`batches.${batchName}`]: updatedBatch,
+	});
+}
+/***GET ALL USERS */
+
+// export async function getAllUsers(role) {
+// 	let registeredUsers = [];
+// 	console.log('USERS LIST', registeredUsers);
+// 	try {
+// 		// Get all doc in a users colection
+// 		const collectionRef = collection(db, 'users');
+
+// 		// Check if currwcnt user has admin role
+
+// 		if (role === 'admin') {
+// 			// This logic is getting all users doc
+// 			const querysnapshot = await getDocs(collectionRef);
+// 			querysnapshot.forEach((doc) => {
+// 				registeredUsers.push(doc.data());
+// 			});
+// 		}
+
+// 		return registeredUsers;
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// }
+
+export async function getAllUsers(role) {
+	if (role !== 'admin') {
+		throw new Error('You do not have permission to view this data.');
+	}
+
+	const collectionRef = collection(db, 'users');
+	const querySnapshot = await getDocs(collectionRef);
+	const users = querySnapshot.docs.map((doc) => ({
+		userId: doc.id,
+		...doc.data(),
+	}));
+	return users;
+}
+
+/**
+ * @function suspendUser updates the user isSuspended property to true and user would be able to login again . They will get erorr , your accound is suspended while trying to login
+ *
+ **/
+
+export async function suspendUser(userId, setIsSuspended) {
+	try {
+		const userRef = doc(db, 'users', userId);
+		const docData = {
+			isSuspended: setIsSuspended,
+		};
+		// Fetch the user's data
+		const userDoc = await getDoc(userRef);
+		console.log(userDoc.data());
+		if (!userDoc.exists()) {
+			throw new Error('User not found.');
+		}
+
+		// Update student suspended
+		await updateDoc(userRef, docData);
+		if (setIsSuspended) {
+			toast.success('Student suspended');
+		} else {
+			toast.success('Student Unsuspended');
+		}
+	} catch (error) {
+		console.error('Error updating student suspention:', error);
+	}
+}
+
+/**@function showOnlyUserApprovedCourse : allows only user that have been approaved to see their course for each batch*/
+
+// export async function showOnlyUserApprovedCourse(
+// 	userId,
+// 	selectedBatch,
+// 	setApprovedCourses
+// ) {
+// 	// Get the current user's document
+// 	const userRef = doc(db, 'users', userId);
+// 	const userDoc = await getDoc(userRef);
+
+// 	if (!userDoc.exists()) {
+// 		throw new Error('User not found.');
+// 	}
+
+// 	// Get the batches for the user
+// 	const batches = userDoc.data().batches;
+// 	console.log(userDoc.data());
+// 	// Check if the selected batch exists
+// 	if (!batches || !batches[selectedBatch]) {
+// 		setApprovedCourses([]); // No courses for the selected batch
+// 		return;
+// 	}
+
+// 	// Filter approved courses for the selected batch
+// 	const courses = batches[selectedBatch].filter(
+// 		(course) => course.approved === true
+// 	);
+
+// 	// Extract course IDs
+// 	const courseIds = courses.map((course) => course.courseID);
+// 	console.log(courseIds);
+// 	// Get the courses matching the course IDs
+// 	const approvedCourses = await getCoursesByIds(courseIds);
+
+// 	// Set the approved courses
+// 	setApprovedCourses(approvedCourses);
+
+// 	return approvedCourses;
+// }
+
+export async function showOnlyUserApprovedCourse(
+	userId,
+	selectedBatch,
+	setApprovedCourses,
+	setLessons
+) {
+	console.log('investigate sledcte batch', selectedBatch);
+	// Get the current user's document
+	const userRef = doc(db, 'users', userId);
+	const userDoc = await getDoc(userRef);
+
+	if (!userDoc.exists()) {
+		throw new Error('User not found.');
+	}
+
+	// Get the batches for the user
+	const batches = userDoc.data().batches;
+
+	// Check if the selected batch exists
+	if (!batches || !batches[selectedBatch]) {
+		setApprovedCourses([]); // No courses for the selected batch
+		setLessons([]); // No lessons for the selected batch
+		return;
+	}
+
+	// Filter approved courses for the selected batch
+	const courses = batches[selectedBatch].filter(
+		(course) => course.approved === true
+	);
+
+	// Extract course IDs
+	const courseIds = courses.map((course) => course.courseID);
+	console.log(courseIds);
+
+	// Get the courses matching the course IDs
+	const approvedCourses = await getCoursesByIds(courseIds);
+
+	// Set the approved courses
+	setApprovedCourses(approvedCourses);
+
+	// Get the lessons for the approved courses and the selected batch
+	const lessonsForApprovedCourses = await getLessonsByCourseAndBatchIds(
+		courseIds,
+		selectedBatch
+	);
+	console.log('MY LESSONS', lessonsForApprovedCourses);
+	// Set the lessons
+	setLessons(lessonsForApprovedCourses);
+
+	return { approvedCourses, lessonsForApprovedCourses };
+}
+
 // const docData = {
 // 	fullname: formValues.fullname,
 // 	whatsapp_no: formValues.whatsapp_no,
@@ -373,3 +612,5 @@ export async function addCourseToBatch(userId, batchName, courseId) {
 /****THE DFFERENCE Ah, let me clarify! Using updateDoc with arrayUnion specifically helps to add a new course ID to the existing array without overriding it. The approach you suggested will replace the array with the new newCourseID value, potentially removing existing course IDs in batchA2025.
 
 If you want to make sure you are only adding to the set of courses without overwriting them, here's the correct way: */
+
+// Helper function to validate the fields being update

@@ -13,6 +13,14 @@ import Courses from './routes/Courses';
 import CourseDetails from './routes/CourseDetails';
 import Lessons from './routes/Lessons';
 import MyCourses from './routes/MyCourses';
+import All from './routes/admin/StudentsList/All';
+import Approved from './routes/admin/StudentsList/Approved';
+import NotApproved from './routes/admin/StudentsList/NotApproved';
+import CourseLessons from './routes/CourseLessons';
+import Profile from './routes/Profile';
+import Certificate from './routes/Certificate';
+import Payments from './routes/Payments';
+import Assessments from './routes/Assessments';
 const Login = lazy(() => import('./routes/Login'));
 const SignUp = lazy(() => import('./routes/SignUp'));
 const UserDashboardLayout = lazy(() =>
@@ -55,7 +63,16 @@ root.render(
 							<Route path='courses' element={<Courses />} />
 							<Route path='my-courses' element={<MyCourses />} />
 							<Route path='courses/:id' element={<CourseDetails />} />
-							<Route path='lessons' element={<Lessons />} />
+							<Route path='profile' element={<Profile />} />
+							<Route path='certificates' element={<Certificate />} />
+							<Route path='certificates' element={<Certificate />} />
+							<Route path='payment' element={<Payments />} />
+							<Route path='assessments' element={<Assessments />} />
+							{/* <Route path='lessons' element={<Lessons />} /> */}
+							<Route
+								path='my-courses/lessons/:id'
+								element={<CourseLessons />}
+							/>
 
 							<Route
 								path='app-settings'
@@ -82,10 +99,18 @@ root.render(
 								}
 							>
 								<Route
+									index
+									element={
+										<ProtectedRoute allowedRoles={['admin']}>
+											<All />
+										</ProtectedRoute>
+									}
+								/>
+								<Route
 									path='approved'
 									element={
 										<ProtectedRoute allowedRoles={['admin']}>
-											<p>Approved</p>
+											<Approved />
 										</ProtectedRoute>
 									}
 								/>
@@ -93,7 +118,15 @@ root.render(
 									path='not-approved'
 									element={
 										<ProtectedRoute allowedRoles={['admin']}>
-											<p>Not Approved</p>
+											<NotApproved />
+										</ProtectedRoute>
+									}
+								/>
+								<Route
+									path=':id'
+									element={
+										<ProtectedRoute allowedRoles={['admin']}>
+											<h1>Student details</h1>
 										</ProtectedRoute>
 									}
 								/>

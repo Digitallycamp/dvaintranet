@@ -6,8 +6,9 @@ import { Oval } from 'react-loader-spinner';
 import { showOnlyUserApprovedCourse } from '../utils/user';
 import { useAuth } from '../context/AuthContext';
 import RegisteredCourseCard from '../components/users/RegisteredCourseCard';
+import PaymentApproved from '../components/PaymentApproved';
 
-function MyCourses() {
+function Payments() {
 	const [selectedBatch, setSelectedBatch] = useState('batchA2025'); // Default selected batch
 	const [approvedCourses, setApprovedCourses] = useState([]); // Approved courses for the selected batch
 	const [lessons, setLessons] = useState([]);
@@ -55,7 +56,7 @@ function MyCourses() {
 	};
 
 	if (loading) {
-		return <p>Loading courses...</p>;
+		return <Oval width={24} height={24} />;
 	}
 
 	if (error) {
@@ -64,7 +65,9 @@ function MyCourses() {
 
 	return (
 		<div className='space-y-6'>
-			<h1>My Courses</h1>
+			<h1 className='text-2xl text-zinc-900'>
+				My Approved Confirmed Payment(s)
+			</h1>
 			<select
 				value={selectedBatch}
 				onChange={handleBatchChange}
@@ -76,18 +79,14 @@ function MyCourses() {
 			<div className='grid sm:grid-cols-2 md:grid-cols-3 gap-5'>
 				{approvedCourses?.length > 0 ? (
 					approvedCourses?.map((course) => (
-						<RegisteredCourseCard
-							key={course.id}
-							{...course}
-							lessons={lessons}
-						/>
+						<PaymentApproved key={course.id} {...course} />
 					))
 				) : (
-					<p>No approved courses for this batch.</p>
+					<p>No approved payment for this batch.</p>
 				)}
 			</div>
 		</div>
 	);
 }
 
-export default MyCourses;
+export default Payments;

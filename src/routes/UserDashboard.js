@@ -34,7 +34,7 @@ function UserDashboard() {
 							<span className=' uppercase'>{user?.fullname}</span>
 						</h1>
 						<span className='text-sm text-zinc-400'>
-							STUDENT ID: DVA-IT-0451290
+							STUDENT ID: {user.studentID}
 						</span>
 					</div>
 				</div>

@@ -208,7 +208,7 @@ function DashboardLayout() {
 			icon: <BookOpenText size={18} />,
 			label: 'My Courses',
 		},
-		{ to: '/me/lessons', icon: <TvMinimal size={18} />, label: 'Lessons' },
+		// { to: '/me/lessons', icon: <TvMinimal size={18} />, label: 'Lessons' },
 		{
 			to: '/me/assessments',
 			icon: <SquareChartGantt size={18} />,
@@ -357,7 +357,9 @@ function DashboardLayout() {
 						<div className='flex items-center space-x-4'>
 							<div className='flex flex-col items-end'>
 								<strong>{user?.fullname}</strong>
-								<span className='text-xs'>DVA-IT-0451290</span>
+								<span className='text-xs'>
+									{user?.studentID ? user?.studentID : 'DVA-IT-0451290'}
+								</span>
 							</div>
 							<ChevronDownIcon
 								className='cursor-pointer'
@@ -381,7 +383,7 @@ function DashboardLayout() {
 										<Link to='/me/my-courses'>My Courses</Link>
 									</li>
 									<li>
-										<button onClick={() => console.log('')}>Logout</button>
+										<button onClick={handleSignOut}>Logout</button>
 									</li>
 								</ul>
 							</div>
