@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/665.6b3b4200.chunk.js","mappings":"yJAMA,QAJA,WACC,OAAOA,EAAAA,EAAAA,KAAA,OAAAC,SAAK,cACb,C","sources":["routes/admin/AppSettings/AppSetting.js"],"sourcesContent":["import React from 'react';\r\n\r\nfunction AppSetting() {\r\n\treturn <div>AppSetting</div>;\r\n}\r\n\r\nexport default AppSetting;\r\n"],"names":["_jsx","children"],"sourceRoot":""}

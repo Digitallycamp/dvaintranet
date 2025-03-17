@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkdvaintranet=self.webpackChunkdvaintranet||[]).push([[665],{665:(n,t,e)=>{e.r(t),e.d(t,{default:()=>r});e(43);var a=e(579);const r=function(){return(0,a.jsx)("div",{children:"AppSetting"})}}}]);
+//# sourceMappingURL=665.6b3b4200.chunk.js.map
