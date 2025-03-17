@@ -10,7 +10,7 @@ import PaymentApproved from '../components/PaymentApproved';
 function Payments() {
 	const [selectedBatch, setSelectedBatch] = useState('batchA2025'); // Default selected batch
 	const [approvedCourses, setApprovedCourses] = useState([]); // Approved courses for the selected batch
-	const [setLessons] = useState([]);
+	const [lessons, setLessons] = useState([]);
 	const [loading, setLoading] = useState(true); // Loading state
 	const [error, setError] = useState(null); // Error state
 	const { user } = useAuth();
@@ -47,7 +47,7 @@ function Payments() {
 		};
 
 		fetchUserData();
-	}, [selectedBatch, user, setLessons]); // Re-run when the selected batch changes
+	}, [selectedBatch, user]); // Re-run when the selected batch changes
 
 	// Handle batch selection
 	const handleBatchChange = (e) => {
