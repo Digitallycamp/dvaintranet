@@ -2,37 +2,25 @@ import {
 	ArrowLeft,
 	Check,
 	Clock,
-	Cross,
 	DollarSign,
 	Network,
 	Workflow,
-	X,
 } from 'lucide-react';
-import React, { use, useState } from 'react';
-import {
-	useLocation,
-	useNavigate,
-	useNavigation,
-	useParams,
-	useSearchParams,
-} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import PaymentInfoCard from './PaymentInfoCard';
 
-import { getDatabase, ref, set } from 'firebase/database';
 import { addCourseToBatch } from '../utils/user';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
 const currentBatch = 'batchA2025';
-const db = getDatabase();
 
 function CourseDetails() {
 	const { user } = useAuth();
 	const [isShowModal, setIsShowModal] = useState(false);
 	const [isSubmitting, setIsSubmiting] = useState(false);
-
-	const { id } = useParams();
 
 	const navigate = useNavigate();
 	const handleBack = () => {

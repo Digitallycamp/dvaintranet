@@ -7,13 +7,12 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
 import { fetchUser } from '../utils/user';
-import { doc, onSnapshot } from 'firebase/firestore';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
-	const [role, setRole] = useState(null);
+	const [role] = useState(null);
 	const [isCurrentUser, setIsCurrentUser] = useState(null);
 	const [authLoading, setAuthLoading] = useState(true);
 	useEffect(() => {

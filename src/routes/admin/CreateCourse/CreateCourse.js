@@ -8,7 +8,6 @@ import {
 } from '../../../utils/course';
 import CourseCard from '../../../components/users/CourseCard';
 import { Timestamp } from 'firebase/firestore';
-import toast from 'react-hot-toast';
 
 // function AddCourse() {
 // 	return (

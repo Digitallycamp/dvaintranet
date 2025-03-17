@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import google from '../assets/google.svg';
 import github from '../assets/github.svg';
-import brandLogo from '../assets/dva_logo.svg';
+
 import illust from '../assets/side-view-man-using-personal-computer-home.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { setUserFiledOnRegistration, setUser } from '../utils/user';
-import { setDoc, doc, Timestamp, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+
 function SignUp() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const navigate = useNavigate();
-	const { signUpWithGoogle, user, isCurrentUser } = useAuth();
+	const { signUpWithGoogle } = useAuth();
 
 	const handleSignUp = async () => {
 		try {

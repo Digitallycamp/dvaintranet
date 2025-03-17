@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
-import { getAllUsers } from '../../../utils/user';
 
 function StudentsList() {
 	return (

@@ -132,7 +132,7 @@
 
 // export default DashboardLayout;
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import RouteLoader from '../../components/shared/RouteLoader';
 import {
 	BookPlus,
@@ -143,9 +143,7 @@ import {
 	MenuIcon,
 	Rocket,
 	SquareChartGantt,
-	TvMinimal,
 	Settings,
-	CheckCheckIcon,
 	ChevronDownIcon,
 	BookOpenText,
 	UsersRound,
@@ -167,7 +165,7 @@ function DashboardLayout() {
 	const deviceType = useDeviceType();
 	const location = useLocation();
 	const navigate = useNavigate();
-	const { user, isCurrentUser, signOutUser } = useAuth();
+	const { user, signOutUser } = useAuth();
 	useEffect(() => {
 		if (user && !user.hasCompletedOnboarding) {
 			navigate('/onboarding');

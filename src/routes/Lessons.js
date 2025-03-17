@@ -51,13 +51,13 @@ function Lessons() {
 								referrerpolicy='strict-origin-when-cross-origin'
 								allowfullscreen
 							></iframe> */}
-							<iframe
+							{/* <iframe
 								className='w-full h-full'
 								src='https://drive.google.com/file/d/18B_nHQP0kDSBIt2SXqhWY6hmrbmq7f72/preview'
 								// width='560'
 								// height='315'
 								allow='autoplay'
-							></iframe>
+							></iframe> */}
 						</div>
 					</div>
 				</section>

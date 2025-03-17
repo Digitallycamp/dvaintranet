@@ -40,7 +40,7 @@ const Certificate = ({ fullName, courseName, date }) => {
 				</button>
 			</header>
 
-			<main className='flex justify-center items-center h-screen'>
+			<div cert-container className='flex justify-center items-center h-screen'>
 				<div
 					ref={certificateRef}
 					className='certificate-container border-8 border-black p-12 w-[297mm] h-[210mm] flex flex-col justify-between items-center bg-white'
@@ -87,7 +87,7 @@ const Certificate = ({ fullName, courseName, date }) => {
 						</h2>
 					</div>
 				</div>
-			</main>
+			</div>
 		</div>
 	);
 };

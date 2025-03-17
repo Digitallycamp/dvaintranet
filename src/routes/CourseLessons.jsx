@@ -1,7 +1,7 @@
-import { ChevronDown, Play, PlayIcon } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Timestamp } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
 	studentMarkLessonAsCompleted,
 	studentSubmitAssessment,
@@ -11,18 +11,14 @@ import { Oval } from 'react-loader-spinner';
 
 function CourseLessons() {
 	const location = useLocation();
-	const [showWeelyLesson, setShowWeelyLesson] = useState(false);
+
 	const [showLeson, setShowLesson] = useState(false);
-	const [completedLesson, setCompletedLesson] = useState(showLeson?.completed);
+
 	const [assessment, setAssessment] = useState('');
 	const [isSubmitting, setIssubmitting] = useState(false);
 	const { user } = useAuth();
 	console.log('showlesson', showLeson);
 	const { state } = location;
-
-	const handleShowWeeklyLesson = () => {
-		setShowWeelyLesson(!showWeelyLesson);
-	};
 
 	const handleMarkLessonAsCompleted = async (id) => {
 		/* Calculate the toggled state

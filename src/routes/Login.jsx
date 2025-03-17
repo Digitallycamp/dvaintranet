@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import google from '../assets/google.svg';
 import github from '../assets/github.svg';
-import brandLogo from '../assets/dva_logo.svg';
+
 import illust from '../assets/side-view-man-using-personal-computer-home.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';

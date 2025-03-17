@@ -10,9 +10,9 @@ import {
 	getDocs,
 	getDoc,
 } from 'firebase/firestore';
-import { auth, db } from '../firebase/firebase';
-import { useAuth } from '../context/AuthContext';
-import toast, { Toaster } from 'react-hot-toast';
+import { db } from '../firebase/firebase';
+
+import toast from 'react-hot-toast';
 import { getCoursesByIds, getLessonsByCourseAndBatchIds } from './course';
 
 // const currentBatch = 'batchA2025';

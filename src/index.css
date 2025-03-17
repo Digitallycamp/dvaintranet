@@ -55,7 +55,7 @@ body {
 
 /* Add this to your global CSS file or a specific CSS module */
 
-main {
+.cert-container {
 	background-image: url('./assets/Cert-background.png');
 	width: 100%;
 	background-size: contain;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import AuthLoader from '../components/shared/AuthLoader';
 

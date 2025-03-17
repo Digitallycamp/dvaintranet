@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Oval } from 'react-loader-spinner';
 
 import { showOnlyUserApprovedCourse } from '../utils/user';
 import { useAuth } from '../context/AuthContext';

@@ -1,6 +1,5 @@
-import { Clock } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { getCourses } from '../utils/course';
 import { Oval } from 'react-loader-spinner';
 import CourseCard from '../components/users/CourseCard';

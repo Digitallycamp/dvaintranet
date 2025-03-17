@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Settings from './routes/admin/Settings/Settings';
+
 import OnboardingScreen from './routes/OnboardingScreen';
 import { AuthProvider } from './context/AuthContext';
 import StudentsList from './routes/admin/StudentsList/StudentsList';
@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
 import Courses from './routes/Courses';
 import CourseDetails from './routes/CourseDetails';
-import Lessons from './routes/Lessons';
+
 import MyCourses from './routes/MyCourses';
 import All from './routes/admin/StudentsList/All';
 import Approved from './routes/admin/StudentsList/Approved';

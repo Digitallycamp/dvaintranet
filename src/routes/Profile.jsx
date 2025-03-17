@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import avatar from '../assets/avater.PNG';
 function Profile() {
-	const { user, isCurrentUser, signOutUser } = useAuth();
+	const { user } = useAuth();
 	const [location, setLocation] = useState({ latitude: null, longitude: null });
 	useEffect(() => {
 		if (user) {
