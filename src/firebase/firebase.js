@@ -15,19 +15,6 @@ const firebaseConfig = {
 	messagingSenderId: process.env.REACT_APP_MESSAGEINGSENDER,
 	appId: process.env.REACT_APP_APPID,
 };
-// const firebaseConfig = {
-// 	apiKey: 'AIzaSyBrsW-0kq5fSI45o_Q9_fXbMrZ9EfNRER8',
-
-// 	authDomain: 'fullstack-classes.firebaseapp.com',
-
-// 	projectId: 'fullstack-classes',
-
-// 	storageBucket: 'fullstack-classes.firebasestorage.app',
-
-// 	messagingSenderId: '331157899761',
-
-// 	appId: '1:331157899761:web:98f0e3ef4a35b35f8e1c50',
-// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
