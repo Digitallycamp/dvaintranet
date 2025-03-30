@@ -123,7 +123,7 @@ function CourseLessons() {
 							{showLeson &&
 								showLeson?.videoURL.map((vid, index) => {
 									const checkVid = !vid
-										? `${state.lessons[0].videoURL[0]}`
+										? `${state.lessons[0]?.videoURL[0]}`
 										: vid;
 
 									return (

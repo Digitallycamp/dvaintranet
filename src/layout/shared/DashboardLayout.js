@@ -262,8 +262,9 @@ function DashboardLayout() {
 					} transition-transform duration-500 ease-in-out md:translate-x-0 md:block md:w-full md:h-screen bg-black/10 md:bg-white border-r border-r-[#CACFD6] fixed top-0 md:static md:top-0 w-full h-screen shadow-lg overflow-y-auto`}
 					onClick={handleToggleMenu}
 				>
-					<div className='flex  w-full justify-center items-center h-20 '>
+					<div className='flex  w-full justify-center items-center h-20 flex-col'>
 						<img src={dvalogo} alt='DVA Academy' width={48} />
+						<strong>LMS</strong>
 					</div>
 
 					<div
