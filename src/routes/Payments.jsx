@@ -6,14 +6,22 @@ import { showOnlyUserApprovedCourse } from '../utils/user';
 import { useAuth } from '../context/AuthContext';
 
 import PaymentApproved from '../components/PaymentApproved';
+import { useAppSettings } from '../hooks/useAppSettings';
 
 function Payments() {
-	const [selectedBatch, setSelectedBatch] = useState('batchA2025'); // Default selected batch
+	const { appDocData, loading: appLoading } = useAppSettings();
+	const [selectedBatch, setSelectedBatch] = useState(''); // Default selected batch
 	const [approvedCourses, setApprovedCourses] = useState([]); // Approved courses for the selected batch
 	const [lessons, setLessons] = useState([]);
 	const [loading, setLoading] = useState(true); // Loading state
 	const [error, setError] = useState(null); // Error state
 	const { user } = useAuth();
+
+	useEffect(() => {
+		if (!selectedBatch && appDocData?.currentBatch) {
+			setSelectedBatch(appDocData.currentBatch);
+		}
+	}, [appDocData]);
 	// Fetch the user's data and filter approved courses
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -46,7 +54,12 @@ function Payments() {
 			}
 		};
 
-		fetchUserData();
+		// Fetch data when `selectedBatch` changes
+		if (selectedBatch) {
+			fetchUserData();
+		}
+
+		// fetchUserData();
 	}, [selectedBatch, user]); // Re-run when the selected batch changes
 
 	// Handle batch selection
@@ -54,6 +67,9 @@ function Payments() {
 		setSelectedBatch(e.target.value);
 	};
 
+	if (appLoading) {
+		return <p>Loading app Data</p>;
+	}
 	if (loading) {
 		return <Oval width={24} height={24} />;
 	}
@@ -62,6 +78,7 @@ function Payments() {
 		return <p className='text-red-500'>{error}</p>;
 	}
 
+	console.log(selectedBatch);
 	return (
 		<div className='space-y-6'>
 			<h1 className='text-2xl text-zinc-900'>
@@ -72,8 +89,13 @@ function Payments() {
 				onChange={handleBatchChange}
 				className='border cursor-pointer border-slate-600 px-4 h-10 rounded-lg focus:outline-0 focus:outline-slate-800'
 			>
-				<option value='batchA2025'>batchA2025</option>
-				<option value='batchB2025'>batchB2025</option>
+				<option>--Select Batch--</option>
+				{user?.batches &&
+					Object.keys(user.batches).map((key, index) => (
+						<option key={index} value={key}>
+							{key}
+						</option>
+					))}
 			</select>
 			<div className='grid sm:grid-cols-2 md:grid-cols-3 gap-5'>
 				{approvedCourses?.length > 0 ? (

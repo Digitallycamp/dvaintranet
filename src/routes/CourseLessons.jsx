@@ -196,16 +196,18 @@ function CourseLessons() {
 											)}
 										</button>
 									</form>
-									<button
-										onClick={() => handleMarkLessonAsCompleted(showLeson?.id)}
-										className={`${
-											showLeson.completed
-												? 'bg-green-400 text-zinc-900 font-bold'
-												: 'bg-zinc-900'
-										} text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer`}
-									>
-										{showLeson.completed ? 'Completed' : 'Mark Completed'}
-									</button>
+									{user.role === 'admin' && (
+										<button
+											onClick={() => handleMarkLessonAsCompleted(showLeson?.id)}
+											className={`${
+												showLeson.completed
+													? 'bg-green-400 text-zinc-900 font-bold'
+													: 'bg-zinc-900'
+											} text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer`}
+										>
+											{showLeson.completed ? 'Completed' : 'Mark Completed'}
+										</button>
+									)}
 								</div>
 							</div>
 						)}

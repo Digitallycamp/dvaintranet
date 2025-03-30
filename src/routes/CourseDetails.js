@@ -14,13 +14,14 @@ import PaymentInfoCard from './PaymentInfoCard';
 import { addCourseToBatch } from '../utils/user';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
-
-const currentBatch = 'batchA2025';
+import { useAppSettings } from '../hooks/useAppSettings';
 
 function CourseDetails() {
 	const { user } = useAuth();
+	const { appDocData } = useAppSettings();
 	const [isShowModal, setIsShowModal] = useState(false);
 	const [isSubmitting, setIsSubmiting] = useState(false);
+	const currentBatch = appDocData.currentBatch;
 
 	const navigate = useNavigate();
 	const handleBack = () => {

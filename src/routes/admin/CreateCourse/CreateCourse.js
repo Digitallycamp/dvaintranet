@@ -8,6 +8,7 @@ import {
 } from '../../../utils/course';
 import CourseCard from '../../../components/users/CourseCard';
 import { Timestamp } from 'firebase/firestore';
+import { useAppSettings } from '../../../hooks/useAppSettings';
 
 // function AddCourse() {
 // 	return (
@@ -453,6 +454,7 @@ function AddCourse() {
 // }
 
 function AddLessonToCourse({ courseId, courseTitle }) {
+	const { appDocData } = useAppSettings();
 	const [batch, setBatch] = useState('');
 	const [courseID, setCourseID] = useState(courseId);
 	// const [lessonID, setLessonID] = useState('');
@@ -561,8 +563,13 @@ function AddLessonToCourse({ courseId, courseTitle }) {
 					onChange={(e) => setBatch(e.target.value)}
 				>
 					<option value=''>--Select Batch--</option>
-					<option value='batchA2025'>batchA2025</option>
-					<option value='batchB2025'>batchB2025</option>
+					{/* <option value='batchA2025'>batchA2025</option>
+					<option value='batchB2025'>batchB2025</option> */}
+					{appDocData.batches.map((b, i) => (
+						<option key={i} value={b}>
+							{b}
+						</option>
+					))}
 				</select>
 				{error.batch && (
 					<span className='text-red-500 text-sm'>{error?.batch}</span>

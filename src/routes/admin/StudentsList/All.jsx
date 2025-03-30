@@ -8,8 +8,10 @@ import {
 import { Ellipsis, Eye, Trash2, UserCheck } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { useAppSettings } from '../../../hooks/useAppSettings';
 
 function All() {
+	const { appDocData } = useAppSettings();
 	const [registeredUsers, setRegisteredUsers] = useState([]);
 	const [searchQuery, setSearchQuery] = useState(''); // State for search input
 	const [filteredUsers, setFilteredUsers] = useState([]); // State for filtered users
@@ -18,7 +20,7 @@ function All() {
 	const [isSearching, setIsSearching] = useState(false); // Loading state for search
 	const [isSuspended, setIsSuspended] = useState(false); // Suspends user
 	const [error, setError] = useState(null);
-	const batchName = 'batchA2025';
+	const batchName = appDocData.currentBatch;
 	const { user } = useAuth();
 
 	// Fetch all users on component mount

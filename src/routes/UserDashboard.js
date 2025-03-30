@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAppSettings } from '../hooks/useAppSettings';
 
 function UserDashboard() {
+	const { appDocData, loading } = useAppSettings();
 	const { user } = useAuth();
 	const navigate = useNavigate();
 
@@ -12,7 +14,6 @@ function UserDashboard() {
 		}
 	}, [user, navigate]);
 
-	console.log(user);
 	if (!user) {
 		return (
 			<div className='h-screen flex justify-center items-cente'>
@@ -20,13 +21,18 @@ function UserDashboard() {
 			</div>
 		); // Loading indicator
 	}
+	if (loading) {
+		return <p>Loading app data</p>;
+	}
 	return (
 		<div>
 			<div className=' w-full bg-zinc-800 rounded-lg p-6 '>
 				<div className=' md:flex md:items-center space-x-6'>
 					<div className='flex flex-col  space-y-1 bg-blue-600 rounded-lg p-6'>
 						<span>Current Batch</span>
-						<strong className='text-2xl'>BATCH A 2024</strong>
+						<strong className='text-2xl uppercase'>
+							{appDocData.currentBatch}
+						</strong>
 					</div>
 					<div>
 						<h1 className='text-white text-2xl'>
@@ -41,7 +47,7 @@ function UserDashboard() {
 				<div className='mt-6 space-y-2'>
 					<span className=' uppercase text-xs text-white'>your progress</span>
 					<div className='h-2 bg-white rounded-md'>
-						<div className='bg-green-700 rounded-md h-2 w-1/4'></div>
+						<div className='bg-green-700 rounded-md h-2 w-1/12'></div>
 					</div>
 				</div>
 			</div>
