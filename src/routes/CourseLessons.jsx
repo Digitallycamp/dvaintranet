@@ -68,6 +68,10 @@ function CourseLessons() {
 		}
 	};
 
+	if (state.lessons.length === 0) {
+		return <p className='text-center'>No lesson posted by Intructor!</p>;
+	}
+
 	return (
 		<div>
 			<header>
@@ -80,7 +84,7 @@ function CourseLessons() {
 			</header>
 			<main className=' flex flex-col lg:flex lg:flex-row gap-6 mt-10 '>
 				<aside className='  lg:w-1/4 bg-zinc-50 p-6 rounded-lg space-y-2 order-2 lg:order-1 overflow-y-auto'>
-					<h3>Batch: {state.lessons[0].batchID}</h3>
+					{<h3>Batch: {state.lessons[0]?.batchID}</h3>}
 					<hr className='border-b border-b-zinc-800' />
 					<div>
 						{/* // dynamic */}

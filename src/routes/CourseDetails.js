@@ -27,6 +27,7 @@ function CourseDetails() {
 		navigate(-1);
 	};
 
+	console.log('NEW USER ==', user);
 	const location = useLocation();
 	const course = location.state;
 	console.log(course);
@@ -36,7 +37,7 @@ function CourseDetails() {
 
 	const handleCompleteRCourseRegistration = async (cid) => {
 		// Check if user already added thatg course
-		if (user.batches[currentBatch].find((crs) => crs.courseID === cid)) {
+		if (user.batches[currentBatch]?.find((crs) => crs.courseID === cid)) {
 			return toast.info(
 				'You have already Registered for this course. Wait for Admin Approval'
 			);
@@ -44,7 +45,7 @@ function CourseDetails() {
 		// Update user batch and course info and send admin to approve payment then before userc an see lesson
 
 		setIsSubmiting(true);
-		await new Promise((resolve) => setTimeout(resolve, 400));
+		// await new Promise((resolve) => setTimeout(resolve, 400));
 		try {
 			// add user selected course to current  batch
 			addCourseToBatch(user.userId, currentBatch, cid);

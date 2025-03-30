@@ -28,6 +28,7 @@ const intialValues = {
 };
 
 function OnboardingScreen() {
+	const { user, isCurrentUser } = useAuth();
 	const [loadingScreen, setIsLoadingScreen] = useState(true);
 	const [formValues, setFormValues] = useState(intialValues);
 	const [step, setStep] = useState(1);
@@ -35,7 +36,6 @@ function OnboardingScreen() {
 	const [isSubmitting, setIsSubmiting] = useState(false);
 
 	const navigate = useNavigate();
-	const { user } = useAuth();
 
 	useEffect(() => {
 		if (user && user.hasCompletedOnboarding) {
@@ -123,15 +123,19 @@ function OnboardingScreen() {
 	async function handleSubmit(event) {
 		event.preventDefault();
 		setIsSubmiting(true);
-		await new Promise((resolve) => setTimeout(() => resolve(), 1500));
+		// await new Promise((resolve) => setTimeout(() => resolve(), 1500));
+		if (!isCurrentUser) {
+			throw new Error('No authenticated user found');
+		}
 		if (validateForm()) {
-			onboardUser(user.userId, formValues)
+			onboardUser(isCurrentUser.uid, formValues)
 				.then(() => {
+					console.log(user.userId);
 					hasCompletedOnboarding(user.userId, true);
 					toast.success('Onboarding completed !.');
 				})
 				.catch((error) => {
-					console.log('User onboarding failed:', error.message);
+					console.log('User onboarding failed:', error.message, error);
 				})
 				.finally(() => {
 					setIsSubmiting(false);

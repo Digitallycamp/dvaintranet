@@ -48,14 +48,40 @@ export const AuthProvider = ({ children }) => {
 		await signInWithPopup(auth, provider);
 	};
 
+	// const signUpWithGoogle = async () => {
+	// 	try {
+	// 		const provider = new GoogleAuthProvider();
+	// 		const result = await signInWithPopup(auth, provider);
+	// 		const user = result.user;
+	// 		return user;
+	// 	} catch (error) {
+	// 		if (error.code === 'auth/popup-closed-by-user') {
+	// 			// Handle the case when the popup is closed by the user
+	// 			window.location.href = '/signup'; // Replace with your desired redirect URL
+	// 		} else {
+	// 			// Handle other errors
+	// 			console.error('Firebase Error: ', error);
+	// 			console.error('Error during sign-up:', error.message);
+	// 		}
+	// 	}
+	// };
+	//grok chnage
 	const signUpWithGoogle = async () => {
 		try {
 			const provider = new GoogleAuthProvider();
 			const result = await signInWithPopup(auth, provider);
 			const user = result.user;
+			if (!user) {
+				throw new Error('No user returned from Google sign-in');
+			}
 			return user;
 		} catch (error) {
-			console.error('Error during sign-up:', error.message);
+			if (error.code === 'auth/popup-closed-by-user') {
+				window.location.href = '/signup'; // Redirect as intended
+			} else {
+				console.error('Firebase Error: ', error.code, error.message);
+				throw error; // Re-throw the error so the caller can handle it
+			}
 		}
 	};
 

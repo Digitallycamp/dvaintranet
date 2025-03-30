@@ -13,50 +13,80 @@ function SignUp() {
 	const navigate = useNavigate();
 	const { signUpWithGoogle } = useAuth();
 
+	// const handleSignUp = async () => {
+	// 	try {
+	// 		setIsSubmitting(true);
+
+	// 		// await new Promise((resolve) => setTimeout(resolve(), 500));
+	// 		const user = await signUpWithGoogle();
+
+	// 		//
+
+	// 		// const provider = new GoogleAuthProvider();
+	// 		// const result = await signInWithPopup(auth, provider);
+	// 		// const user = result.user;
+
+	// 		// const docReference = doc(db, 'users', user.uid);
+	// 		// await setDoc(docReference, {
+	// 		// 	userId: user.uid,
+	// 		// 	fullname: '',
+	// 		// 	email: user.email,
+	// 		// 	whatsapp_no: '',
+	// 		// 	dob: { day: '', month: '' },
+	// 		// 	age: '',
+	// 		// 	education: '',
+	// 		// 	previousKnowledge: '',
+	// 		// 	techProficiency: '',
+	// 		// 	bootcampCommitment: '',
+	// 		// 	videoConferencingComfort: '',
+	// 		// 	preferredClassTime: '',
+	// 		// 	purpose: '',
+	// 		// 	currentProfession: '',
+	// 		// 	applicationReason: '',
+	// 		// 	isSuspended: false,
+	// 		// 	isCertIssued: false,
+	// 		// 	hasCompletedOnboarding: false,
+	// 		// 	role: 'user',
+	// 		// 	registeredDate: Timestamp.now(),
+	// 		// });
+	// 		await setUser(user.uid, user.email);
+	// 		const student = setUserFiledOnRegistration(user.uid);
+	// 		if (student.hasCompletedOnboarding) {
+	// 			navigate('/me');
+	// 		}
+	// 		navigate('/onboarding');
+	// 	} catch (error) {
+	// 		console.error('Error during sign-up:', error.message);
+	// 	} finally {
+	// 		setIsSubmitting(false);
+	// 	}
+	// };
+	// grok chnage
 	const handleSignUp = async () => {
 		try {
 			setIsSubmitting(true);
-
-			await new Promise((resolve) => setTimeout(resolve(), 500));
 			const user = await signUpWithGoogle();
+			if (!user) {
+				throw new Error('Sign-up failed: No user returned');
+			}
 
-			//
-
-			// const provider = new GoogleAuthProvider();
-			// const result = await signInWithPopup(auth, provider);
-			// const user = result.user;
-
-			// const docReference = doc(db, 'users', user.uid);
-			// await setDoc(docReference, {
-			// 	userId: user.uid,
-			// 	fullname: '',
-			// 	email: user.email,
-			// 	whatsapp_no: '',
-			// 	dob: { day: '', month: '' },
-			// 	age: '',
-			// 	education: '',
-			// 	previousKnowledge: '',
-			// 	techProficiency: '',
-			// 	bootcampCommitment: '',
-			// 	videoConferencingComfort: '',
-			// 	preferredClassTime: '',
-			// 	purpose: '',
-			// 	currentProfession: '',
-			// 	applicationReason: '',
-			// 	isSuspended: false,
-			// 	isCertIssued: false,
-			// 	hasCompletedOnboarding: false,
-			// 	role: 'user',
-			// 	registeredDate: Timestamp.now(),
-			// });
+			// Create user document in Firestore
 			await setUser(user.uid, user.email);
-			const student = setUserFiledOnRegistration(user.uid);
+
+			// Fetch user data
+			const student = await setUserFiledOnRegistration(user.uid);
+			if (!student) {
+				throw new Error('Failed to fetch user data after creation');
+			}
+
 			if (student.hasCompletedOnboarding) {
 				navigate('/me');
+			} else {
+				navigate('/onboarding');
 			}
-			navigate('/onboarding');
 		} catch (error) {
 			console.error('Error during sign-up:', error.message);
+			alert('Sign-up failed: ' + error.message);
 		} finally {
 			setIsSubmitting(false);
 		}

@@ -14,6 +14,7 @@ import { db } from '../firebase/firebase';
 
 import toast from 'react-hot-toast';
 import { getCoursesByIds, getLessonsByCourseAndBatchIds } from './course';
+import { getAuth } from 'firebase/auth';
 
 // const currentBatch = 'batchA2025';
 export async function setUser(userId, currentUserEmail) {
@@ -49,15 +50,24 @@ export async function setUser(userId, currentUserEmail) {
 	await setDoc(docReference, docData);
 }
 
-export function onboardUser(userId, formValues) {
+export async function onboardUser(userId, formValues) {
+	const auth = getAuth();
+	const currentUser = auth.currentUser;
+
+	if (!currentUser) {
+		throw new Error('No authenticated user found');
+	}
+	if (!currentUser || currentUser.uid !== userId) {
+		throw new Error('User not authenticated or UID mismatch');
+	}
 	const docData = {
 		// userId: userId,
 		fullname: formValues.fullname,
 		// email: currentUserEmail,
 		whatsapp_no: formValues.whatsapp_no,
-		dob: { day: formValues.dob.day, month: formValues.dob.day },
+		dob: { day: formValues.dob.day, month: formValues.dob.month },
 		age: formValues.age,
-		batches: {},
+		// batches: {},
 		education: formValues.education,
 		previousKnowledge: formValues.previousKnowledge,
 		techProficiency: formValues.techProficiency,
@@ -67,17 +77,22 @@ export function onboardUser(userId, formValues) {
 		purpose: formValues.purpose,
 		currentProfession: formValues.currentProfession,
 		applicationReason: formValues.applicationReason,
-		isSuspended: false,
-		isCertIssued: false,
-		hasCompletedOnboarding: false,
+		// isSuspended: false,
+		// isCertIssued: false,
+		// hasCompletedOnboarding: false,
 
 		timestamp: serverTimestamp(),
 	};
 
-	const docReference = doc(db, 'users', userId);
-	const updatedData = updateDoc(docReference, docData);
+	try {
+		const docReference = doc(db, 'users', userId);
+		const updatedData = await updateDoc(docReference, docData);
 
-	return updatedData;
+		return updatedData;
+	} catch (error) {
+		console.error('User onboarding failed:', error.message);
+		throw error;
+	}
 }
 
 export function hasCompletedOnboarding(userId, setComplete) {
@@ -92,16 +107,32 @@ export async function fetchUserRole(userId) {
 	console.log('0o0o0ikkj');
 }
 
+// export async function setUserFiledOnRegistration(userId) {
+// 	try {
+// 		const docReference = doc(db, 'users', userId);
+// 		const unsubscribe = onSnapshot(docReference, (doc) => {
+// 			return doc.data();
+// 		});
+
+// 		return unsubscribe;
+// 	} catch (error) {
+// 		console.log('failed to fetch student info', error.message);
+// 	}
+// }
+//grok chanage
 export async function setUserFiledOnRegistration(userId) {
 	try {
 		const docReference = doc(db, 'users', userId);
-		const unsubscribe = onSnapshot(docReference, (doc) => {
-			return doc.data();
-		});
-
-		return unsubscribe;
+		const docSnapshot = await getDoc(docReference); // Use getDoc instead of onSnapshot for a one-time fetch
+		if (docSnapshot.exists()) {
+			return docSnapshot.data();
+		} else {
+			console.error('No such user exists after creation!');
+			return null;
+		}
 	} catch (error) {
-		console.log('failed to fetch student info', error.message);
+		console.error('Failed to fetch student info:', error.message);
+		throw error;
 	}
 }
 
