@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 import certbg from '../assets/Cert-background.png';
 import badgepng from '../assets/badge.png';
+import Cert from '../components/Cert';
 
 const Certificate = ({ fullName, courseName, date }) => {
 	const certificateRef = useRef(null);
@@ -31,7 +32,8 @@ const Certificate = ({ fullName, courseName, date }) => {
 
 	return (
 		<div>
-			<header className='mb-8 text-center'>
+			<Cert />
+			{/* <header className='mb-8 text-center'>
 				<button
 					className='px-3 h-8 bg-slate-950 text-white font-bold rounded-md'
 					// onClick={handleDownload}
@@ -87,7 +89,7 @@ const Certificate = ({ fullName, courseName, date }) => {
 						</h2>
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

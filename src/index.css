@@ -1,3 +1,5 @@
+/* Ensure the font is loaded */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 body {
 	background-color: #eee6e3;
 }
@@ -70,4 +72,15 @@ body {
 	background-repeat: no-repeat;
 	background-size: contain;
 	color: #f9f9f9d8;
+}
+
+.cert {
+	font-family: 'Inter', sans-serif;
+}
+
+.cerbg {
+	background-image: url('./assets/Cert-background.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 }
