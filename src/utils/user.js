@@ -136,7 +136,7 @@ export async function setUserFiledOnRegistration(userId) {
 	}
 }
 
-export function fetchUser(userId, callback) {
+export async function fetchUser(userId, callback) {
 	try {
 		const docReference = doc(db, 'users', userId);
 		const unsubscribe = onSnapshot(docReference, (docSnapshot) => {
@@ -154,6 +154,24 @@ export function fetchUser(userId, callback) {
 		console.error('Failed to fetch user info:', error.message);
 		callback(null);
 		return () => {};
+	}
+}
+
+/***FECT USER */
+export async function getUser(userId) {
+	try {
+		const docReference = doc(db, 'users', userId);
+		const docSnapshot = await getDoc(docReference);
+
+		if (docSnapshot.exists()) {
+			return docSnapshot.data();
+		} else {
+			console.error('No such user exists!');
+			return null;
+		}
+	} catch (error) {
+		console.error('Failed to fetch user info:', error.message);
+		return null;
 	}
 }
 

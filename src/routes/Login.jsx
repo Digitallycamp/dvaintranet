@@ -6,14 +6,39 @@ import github from '../assets/github.svg';
 import illust from '../assets/side-view-man-using-personal-computer-home.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getUser } from '../utils/user';
+import toast from 'react-hot-toast';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
 
 function Login() {
 	const { loginWithGoogle } = useAuth();
 	const navigate = useNavigate();
 
 	const handleSubmitWithGoogle = async () => {
-		await loginWithGoogle();
+		const user = await loginWithGoogle();
 
+		if (!user) {
+			console.error('User not found');
+			return;
+		}
+
+		// Check if user exists
+		const isUserExist = await getUser(user.uid);
+
+		if (!isUserExist) {
+			toast.error('You don’t have an account yet!, Register Account First');
+			console.error('User does not exist');
+
+			// Sign the user out immediately
+			await signOut(auth);
+
+			// Redirect to sign-up page
+			navigate('/signup');
+			return;
+		}
+
+		// Proceed if user exists
 		navigate('/me');
 	};
 	return (

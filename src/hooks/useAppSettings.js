@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchAppSettings } from '../utils/appsettings';
+import { toast } from 'react-toastify';
 
 export function useAppSettings() {
 	const [appDocData, setAppDocData] = useState({
@@ -23,6 +24,15 @@ export function useAppSettings() {
 				}
 			} catch (err) {
 				console.log(err);
+				console.log(err.message);
+				if (
+					err.message ===
+					'Failed to get document because the client is offline.'
+				) {
+					toast.info('You are not connected to internet', {
+						position: 'bottom-right',
+					});
+				}
 				setError(err.mesage);
 			} finally {
 				setLoading(false);

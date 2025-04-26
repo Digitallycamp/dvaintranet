@@ -25,8 +25,10 @@ import { useDeviceType } from '../../hooks/useDeviceType';
 import { useAuth } from '../../context/AuthContext';
 import dvalogo from '../../assets/dva_logo.svg';
 import { useAppSettings } from '../../hooks/useAppSettings';
+
 function DashboardLayout() {
 	const { appDocData, loading } = useAppSettings();
+
 	const [loadingScreen, setLoadingScreen] = useState(true);
 	const [openMenu, setOpenMenu] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
@@ -54,6 +56,7 @@ function DashboardLayout() {
 	if (loading) {
 		return <p>Loading app data</p>;
 	}
+
 	const handleToggleMenu = (e) => {
 		e.stopPropagation();
 		setOpenMenu(!openMenu);

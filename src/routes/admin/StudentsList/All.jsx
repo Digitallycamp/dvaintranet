@@ -20,6 +20,7 @@ function All() {
 	const [isSearching, setIsSearching] = useState(false); // Loading state for search
 	const [isSuspended, setIsSuspended] = useState(false); // Suspends user
 	const [error, setError] = useState(null);
+	const [sbatch, setSbatch] = useState();
 	const batchName = appDocData.currentBatch;
 	const { user } = useAuth();
 
@@ -28,7 +29,7 @@ function All() {
 		const fetchUsers = async () => {
 			try {
 				const users = await getAllUsers(user.role);
-				console.log('Fetched Users:', users); // Debugging: Log fetched users
+
 				setRegisteredUsers(users);
 				setFilteredUsers(users); // Initialize filteredUsers with all users
 			} catch (error) {
@@ -115,7 +116,23 @@ function All() {
 			setIsSearching(false); // Stop searching
 		}
 	};
-
+	//GET USERS BY BATCH
+	console.log('my', registeredUsers);
+	const filteredStudent = registeredUsers.filter((student) => {
+		const user = Object.keys(student.batches).includes(sbatch);
+		return user;
+	});
+	console.log('YEEEE', filteredStudent);
+	useEffect(() => {
+		const handleFilterStudentByBatch = async () => {
+			const filteredStudent = registeredUsers.filter((student) => {
+				const user = Object.keys(student.batches) || '';
+				return user.includes(sbatch);
+			});
+			setFilteredUsers(filteredStudent);
+		};
+		handleFilterStudentByBatch();
+	}, [sbatch]);
 	// Handles suspending user
 	const handleSuspendUser = async (userId) => {
 		setIsSuspended((prev) => !prev);
@@ -131,31 +148,47 @@ function All() {
 		return <p className='text-red-500'>{error}</p>;
 	}
 
+	console.log(sbatch);
 	return (
 		<div className='border border-slate-100 p-8 rounded-lg'>
-			<div className='flex justify-end mb-10 w-full space-x-2'>
+			<div className='flex items-center mb-10'>
 				<div>
-					<input
-						type='search'
-						name='searchuser'
-						value={searchQuery}
-						onChange={(e) => setSearchQuery(e.target.value)}
-						placeholder='Search email or name'
+					<label>Filter</label>
+					<select
+						value={sbatch}
+						onChange={(e) => setSbatch(e.target.value)}
 						className='border border-slate-600 px-4 h-10 rounded-lg focus:outline-0 focus:outline-slate-800'
-					/>
+					>
+						<option>--Filter students by batch--</option>
+						{appDocData?.batches.map((b, i) => (
+							<option key={i}>{b}</option>
+						))}
+					</select>
 				</div>
-				<button
-					onClick={handleSearch}
-					className='bg-slate-900 text-slate-100 px-3 rounded-lg h-10'
-					disabled={isSearching} // Disable button while searching
-				>
-					{isSearching ? 'Searching...' : 'Search user'}
-				</button>
+				<div className='flex justify-end w-full space-x-2'>
+					<div>
+						<input
+							type='search'
+							name='searchuser'
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+							placeholder='Search email or name'
+							className='border border-slate-600 px-4 h-10 rounded-lg focus:outline-0 focus:outline-slate-800'
+						/>
+					</div>
+					<button
+						onClick={handleSearch}
+						className='bg-slate-900 text-slate-100 px-3 rounded-lg h-10'
+						disabled={isSearching} // Disable button while searching
+					>
+						{isSearching ? 'Searching...' : 'Search user'}
+					</button>
+				</div>
 			</div>
 			{isSearching ? (
 				<p>Searching...</p> // Display loading indicator while searching
 			) : (
-				<table className='w-full table-auto'>
+				<table className='w-full table-auto '>
 					<thead className='border-b-2 border-b-slate-200 overflow-x-auto'>
 						<tr className='text-left py-4'>
 							<th>Serial No</th>

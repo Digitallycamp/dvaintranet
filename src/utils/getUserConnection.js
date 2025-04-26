@@ -1,18 +1,34 @@
-function userConnection() {
-	window.addEventListener('load', () => {
-		let connection = navigator.onLine;
-		if (connection) {
-			alert('you are  connected');
-		} else {
-			alert('you are  not connected');
-		}
-		// window.addEventListener('online', () => alert('You are online'));
-		// window.addEventListener('offline', () => alert('You are offline'));
-		console.log(connection);
-	});
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-	// return connection;
+function useConnection() {
+	const [isOnline, setIsOnline] = useState(navigator.onLine); // Initialize with the current connection state
+
+	useEffect(() => {
+		// Function to handle online event
+		const handleOnline = () => {
+			setIsOnline(true);
+			toast.info('You are connected');
+		};
+
+		// Function to handle offline event
+		const handleOffline = () => {
+			setIsOnline(false);
+			toast.error('You are not connected');
+		};
+
+		// Add event listeners for online and offline events
+		window.addEventListener('online', handleOnline);
+		window.addEventListener('offline', handleOffline);
+
+		// Cleanup event listeners on unmount
+		return () => {
+			window.removeEventListener('online', handleOnline);
+			window.removeEventListener('offline', handleOffline);
+		};
+	}, []);
+
+	return isOnline; // Return the current connection state
 }
 
-userConnection();
-export default userConnection;
+export default useConnection;

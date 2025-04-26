@@ -17,7 +17,16 @@ function PaymentInfoCard({
 		<>
 			{appDocData.currentBatch === 'none' ? (
 				<p className='text-center text-red-700'>
-					No on going live classes, Join community group for more info
+					No ongoing live classes,{' '}
+					<a
+						className='text-blue-800'
+						href='https://chat.whatsapp.com/LV9wATBQ25o689CgsiDfLx'
+						rel='noreferrer'
+						target='_blank'
+					>
+						Join community
+					</a>{' '}
+					for more info
 				</p>
 			) : (
 				<div className=' rounded-lg max-w-[512px] h-fit space-y-3 '>

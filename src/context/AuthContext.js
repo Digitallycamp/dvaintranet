@@ -44,8 +44,23 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	const loginWithGoogle = async () => {
-		const provider = new GoogleAuthProvider();
-		await signInWithPopup(auth, provider);
+		try {
+			const provider = new GoogleAuthProvider();
+			const result = await signInWithPopup(auth, provider);
+			const user = result.user;
+
+			if (!user) {
+				throw new Error('No user returned from Google sign-in');
+			}
+			return user;
+		} catch (error) {
+			if (error.code === 'auth/popup-closed-by-user') {
+				window.location.href = '/'; // Redirect as intended
+			} else {
+				console.error('Firebase Error: ', error.code, error.message);
+				throw error; // Re-throw the error so the caller can handle it
+			}
+		}
 	};
 
 	// const signUpWithGoogle = async () => {
