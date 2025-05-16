@@ -45,7 +45,7 @@ function Assessments() {
 				{submittedAssessments.map((assessment) => (
 					<div
 						key={assessment.id}
-						className='p-4 border rounded-md shadow-sm bg-white'
+						className='p-4 border rounded-md shadow-sm bg-white w-full max-w-[768px]'
 					>
 						<h2 className='text-lg font-bold'>{assessment.lesson_title}</h2>
 						<h3>Assessment ID: {assessment.id}</h3>

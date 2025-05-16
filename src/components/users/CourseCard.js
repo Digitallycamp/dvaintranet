@@ -15,7 +15,9 @@ function CourseCard(props) {
 	} = props;
 
 	const slug = createSlug(title);
-
+	const { courseList } = props;
+	console.log('ALPHA PROS', props);
+	console.log('ALPHA PROS lst', courseList);
 	return (
 		<div className=' border border-zinc-100 rounded-lg  hover:bg-zinc-50 shadow-zinc-100 p-6 flex flex-col space-y-6 h-full '>
 			<div className='flex-grow'>
@@ -45,7 +47,7 @@ function CourseCard(props) {
 						<Link
 							to={`/me/courses/edit/${slug}?msockid=${id}`}
 							className='bg-zinc-900 text-zinc-300 font-semibold px-3 py-2 rounded-md mt-auto cursor-pointer'
-							state={props}
+							state={{ id, title, duration, careerPath, skillLevel }}
 						>
 							Edit
 						</Link>

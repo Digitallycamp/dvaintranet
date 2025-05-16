@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const DVABootcampLaunchpad = () => {
 	return (
-		<div className='min-h-screen bg-gradient-to-b from-blue-50 to-white'>
+		<div className='min-h-screen'>
 			<div className='container mx-auto px-4 py-12 space-y-20'>
 				{/* Header/Welcome Section */}
 				<section className='text-center space-y-6' id='welcome'>

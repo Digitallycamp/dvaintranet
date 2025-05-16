@@ -32,7 +32,7 @@ function UserDashboard() {
 	}
 	return (
 		<div>
-			<div className=' w-full bg-zinc-800 rounded-lg p-6 '>
+			<div className=' w-full space-y-6 bg-gradient-to-r from-green-500 to-blue-500 text-white p-10 rounded-2xl shadow-xl'>
 				<div className=' md:flex md:items-center space-x-6'>
 					<div className='flex flex-col  space-y-1 bg-blue-600 rounded-lg p-6'>
 						<span>Current Batch</span>
@@ -40,12 +40,12 @@ function UserDashboard() {
 							{appDocData.currentBatch}
 						</strong>
 					</div>
-					<div>
-						<h1 className='text-white text-2xl'>
-							<span>Weclome,</span>
-							<span className=' uppercase'>{user?.fullname}</span>
+					<div className='mt-6'>
+						<h1 className='text-white font-bold text-2xl'>
+							<span>Welcome,</span>
+							<span className=' font-bold capitalize'>{user?.fullname}</span>
 						</h1>
-						<span className='text-sm text-zinc-400'>
+						<span className='text-lg text-white'>
 							STUDENT ID: {user.studentID}
 						</span>
 					</div>

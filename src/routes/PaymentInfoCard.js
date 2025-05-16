@@ -50,7 +50,7 @@ function PaymentInfoCard({
 						</div>
 						<div className='space-x-3'>
 							<strong>Account Number:</strong>
-							<small>098989898989</small>
+							<small>0773489215</small>
 						</div>
 						<div className='space-x-3'>
 							<strong>Bank:</strong>

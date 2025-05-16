@@ -24,6 +24,7 @@ import Assessments from './routes/Assessments';
 import LaunchPad from './routes/admin/LaunchPad/LaunchPad';
 import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './routes/ProtectedRoute';
+import EditCourse from './routes/admin/CreateCourse/EditCourse';
 const Login = lazy(() => import('./routes/Login'));
 const SignUp = lazy(() => import('./routes/SignUp'));
 const UserDashboardLayout = lazy(() =>
@@ -70,6 +71,7 @@ root.render(
 							<Route path='settings' element={<h1>Setings</h1>} />
 							<Route path='launch-pad' element={<LaunchPad />} />
 							<Route path='courses' element={<Courses />} />
+							<Route path='courses/edit/:id' element={<EditCourse />} />
 							<Route path='my-courses' element={<MyCourses />} />
 							<Route path='courses/:id' element={<CourseDetails />} />
 							<Route path='profile' element={<Profile />} />
@@ -141,7 +143,10 @@ root.render(
 								/>
 							</Route>
 						</Route>
-						<Route path='*' element={<h1>Not Found</h1>} />
+						<Route
+							path='*'
+							element={<h1 className='text-center'>Not Found</h1>}
+						/>
 					</Routes>
 				</AuthProvider>
 			</ThemeProvider>
