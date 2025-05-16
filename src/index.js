@@ -22,14 +22,13 @@ import Certificate from './routes/Certificate';
 import Payments from './routes/Payments';
 import Assessments from './routes/Assessments';
 import LaunchPad from './routes/admin/LaunchPad/LaunchPad';
-
+import { ThemeProvider } from './context/ThemeContext';
+import ProtectedRoute from './routes/ProtectedRoute';
 const Login = lazy(() => import('./routes/Login'));
 const SignUp = lazy(() => import('./routes/SignUp'));
 const UserDashboardLayout = lazy(() =>
 	import('./layout/shared/DashboardLayout')
 );
-
-const ProtectedRoute = lazy(() => import('./routes/ProtectedRoute'));
 
 const UserDashboard = lazy(() => import('./routes/UserDashboard'));
 const AppSettings = lazy(() => import('./routes/admin/AppSettings/AppSetting'));
@@ -41,12 +40,20 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<AuthProvider>
-				<Suspense>
+			<ThemeProvider>
+				<AuthProvider>
 					<Routes>
 						{/* public route for both user and admin */}
 
-						<Route index element={<Login />} />
+						<Route
+							index
+							element={
+								<Suspense fallback={<div>Loading...</div>}>
+									{/* Ideally, wrap each lazy-loaded route separately: */}
+									<Login />
+								</Suspense>
+							}
+						/>
 						<Route path='/signup' element={<SignUp />} />
 						<Route path='/signin' element={<Login />} />
 						<Route path='onboarding' element={<OnboardingScreen />} />
@@ -136,8 +143,8 @@ root.render(
 						</Route>
 						<Route path='*' element={<h1>Not Found</h1>} />
 					</Routes>
-				</Suspense>
-			</AuthProvider>
+				</AuthProvider>
+			</ThemeProvider>
 
 			<Toaster position='top-center' />
 			<ToastContainer />

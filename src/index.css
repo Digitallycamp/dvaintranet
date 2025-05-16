@@ -1,8 +1,27 @@
 /* Ensure the font is loaded */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-body {
-	background-color: #eee6e3;
+
+/* Light Mode */
+:root {
+	--bg-color: #ffffff;
+	--text-color: #080808;
 }
+
+/* Dark Mode */
+[data-theme='dark'] {
+	--bg-color: #1e1e1e;
+	--text-color: #ffffff;
+}
+
+body {
+	/* background-color: #eee6e3; */
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
+
+/* body {
+	background-color: #eee6e3;background-color: #eee6e3;
+} */
 
 /* For WebKit Browsers (e.g., Chrome, Safari) */
 .custom-scrollbar::-webkit-scrollbar {

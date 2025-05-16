@@ -164,9 +164,9 @@ function OnboardingScreen() {
 					<h1 className='text-2xl text-center text-[#1c1d1d] font-bold'>
 						Welcome to Digitally Virtual Academy – Your Gateway to Learning 🚀
 					</h1>
-					<h3 className='text-sm text-center text-[#1c1d1d] font-medium mt-3'>
+					<h2 className='text-sm text-center text-[#1c1d1d] font-medium mt-3'>
 						Discover, Learn, and Grow – All in one place.
-					</h3>
+					</h2>
 				</header>
 				<section>
 					<p className='text-sm text-center text-[#1c1d1d] font-normal'>
@@ -204,6 +204,14 @@ function OnboardingScreen() {
 								<legend className='text-lg font-semibold text-[#1c1d1d] mb-4'>
 									Personal and Contact Information
 								</legend>
+								<p className='text-[9px]'>
+									<span className='bg-yellow-100 px-2 py-1 rounded'>
+										Recommendation:
+									</span>{' '}
+									Our AI Agent will use your information to recommend career and
+									course for you. We recommend your fill your accurate
+									information
+								</p>
 								<div className='flex flex-col gap-2'>
 									<label className='text-sm font-semibold text-[#1c1d1d]'>
 										Full name (for certificate purposes)
@@ -347,6 +355,14 @@ function OnboardingScreen() {
 								<legend className='text-lg font-semibold text-[#1c1d1d] mb-4'>
 									Bootcamp Readiness and Preferences
 								</legend>
+								<p className='text-[9px]'>
+									<span className='bg-yellow-100 px-2 py-1 rounded'>
+										Recommendation:
+									</span>{' '}
+									Our AI Agent will use your information to recommend career and
+									course for you. We recommend your fill your accurate
+									information
+								</p>
 								<div className='flex flex-col gap-2'>
 									<label className='text-sm font-semibold text-[#1c1d1d]'>
 										Do you have any previous knowledge of the course?
@@ -465,6 +481,14 @@ function OnboardingScreen() {
 								<legend className='text-lg font-semibold text-[#1c1d1d] mb-4'>
 									Additional Insights
 								</legend>
+								<p className='text-[9px]'>
+									<span className='bg-yellow-100 px-2 py-1 rounded'>
+										Recommendation:
+									</span>{' '}
+									Our AI Agent will use your information to recommend career and
+									course for you. We recommend your fill your accurate
+									information
+								</p>
 								<div className='flex flex-col gap-2'>
 									<lable className=' text-sm font-semibold text-[#1c1d1d'>
 										What is your purpose of taking this course?{' '}

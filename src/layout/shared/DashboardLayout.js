@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import RouteLoader from '../../components/shared/RouteLoader';
 import {
 	BookPlus,
@@ -25,10 +25,11 @@ import { useDeviceType } from '../../hooks/useDeviceType';
 import { useAuth } from '../../context/AuthContext';
 import dvalogo from '../../assets/dva_logo.svg';
 import { useAppSettings } from '../../hooks/useAppSettings';
+import { ThemeContext } from '../../context/ThemeContext';
 
 function DashboardLayout() {
 	const { appDocData, loading } = useAppSettings();
-
+	const { darkMode, setDarkMode } = useContext(ThemeContext);
 	const [loadingScreen, setLoadingScreen] = useState(true);
 	const [openMenu, setOpenMenu] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
@@ -257,6 +258,11 @@ function DashboardLayout() {
 									</li>
 									<li>
 										<button onClick={handleSignOut}>Logout</button>
+									</li>
+									<li>
+										<button onClick={() => setDarkMode(!darkMode)}>
+											{darkMode ? 'DarkMod' : 'LightMod'}
+										</button>
 									</li>
 								</ul>
 							</div>

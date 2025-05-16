@@ -15,7 +15,7 @@ function Cert() {
 							Certificate of Completion
 						</p>
 						<h2 className='text-5xl text-center font-extrabold mt-3'>
-							Wisdom Chimezie Wisdom
+							Wisdom C. Onyearizo
 						</h2>
 						<p className='text-center text-2xl mt-4'>
 							Has graduated the Digital Academy
@@ -53,7 +53,7 @@ function Cert() {
 								<img src={cttsignature} alt='CTT Signatire' width={110} />
 							</div>
 							<div>
-								<p className='text-2xl font-light'>Wisdom Christoper, CTT</p>
+								<p className='text-2xl font-light'>Wisdom Christoper, CPLP</p>
 								<p className='text-center font-light'>
 									Digitally Virtual Academy
 								</p>

@@ -2,6 +2,12 @@ import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useAppSettings } from '../hooks/useAppSettings';
+import { content } from '../utils/launchpad';
+import ReactPlayer from 'react-player';
+
+const dashboardOverview = content.find(
+	(val) => val.title === 'Dashboard Overview'
+);
 
 function UserDashboard() {
 	const { appDocData, loading } = useAppSettings();
@@ -50,6 +56,30 @@ function UserDashboard() {
 						<div className='bg-green-700 rounded-md h-2 w-1/12'></div>
 					</div>
 				</div>
+			</div>
+			<div>
+				<h3 className='text-2xl font-semibold text-gray-800 mt-10 '>
+					Dashboard Overview
+				</h3>
+				<p className='mb-6'>
+					Learn how the dashboard work and how to navigate your way through.
+				</p>
+				<div className='w-full bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg'>
+					<div className=' aspect-video'>
+						<ReactPlayer
+							width='100%'
+							height='100%'
+							url={dashboardOverview.link}
+							controls
+						/>
+					</div>
+				</div>
+			</div>
+			<div className='pt-10'>
+				<h3 className='text-2xl font-semibold text-gray-800 mt-10 '>
+					AI career and course personalized recommendation.
+				</h3>
+				<p>Coming soon</p>
 			</div>
 		</div>
 	);
